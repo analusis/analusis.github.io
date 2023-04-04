@@ -1,7 +1,7 @@
 site: Data Analytics Portfolio
 
 url: https://analusis.dev
-baseurl: https://analusis.dev/
+baseurl: 
 
 collections:
   pages:
