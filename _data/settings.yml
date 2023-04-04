@@ -33,7 +33,6 @@ contact_settings:
   send_button_text: 'Send Message'
 
 social_settings:
-  kaggle_url: 'https://www.kaggle.com/analusis'
   facebook_url: ''
   twitter_url: ''
   instagram_url: ''
