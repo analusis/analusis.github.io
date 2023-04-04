@@ -1,7 +1,7 @@
-site: Personal Jekyll Theme
+site: Data Analytics Portfolio
 
-url: 
-baseurl: 
+url: https://analusis.dev
+baseurl: https://analusis.dev/
 
 collections:
   pages:
