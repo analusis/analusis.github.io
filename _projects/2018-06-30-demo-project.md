@@ -1,9 +1,9 @@
 ---
-title: 'Demo Project'
-subtitle: 'This is a demo'
+title: 'Cyclistic - Rider Usage Trends'
+subtitle: 'Coursera Google Data Analytics - Case Study 1'
 date: 2018-06-30 00:00:00
-description: This page is a demo that shows everything you can do inside portfolio and blog posts.
-featured_image: '/images/demo/demo-square.jpg'
+description: Analyze rider data from the last 12 months to identify trends in usage between member and casual riders.
+featured_image: '/images/projects/cgda/cs01/cover.png'
 ---
 
 ![](/images/demo/demo-landscape.jpg)
