@@ -21,8 +21,8 @@ I completed the course in April 2023 with the following case studies:
 
 | Case Study               | Summary | Technology               |
 |--------------------------|---------|--------------------------|
-| <a href="">Cyclistic</a> | Analyze rider data from the last 12 months to identify trends in usage between member and casual riders. | Excel, R Studio, Tableau |
-| <a href="">Wellness</a>  |  | |
+| <a href="{{ '/project/gda-casestudy1' | relative_url }}">Cyclistic</a> | Analyze rider data from the last 12 months to identify trends in usage between member and casual riders. | Excel, R Studio, Tableau |
+| <a href="{{ '/project/gda-casestudy2' | relative_url }}">Wellness</a>  |  | |
 
 {% assign currentDate = site.time | date: '%s' %}
 {% assign startDate = '2022-09-19' | date: '%s' %}
