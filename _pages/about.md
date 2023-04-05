@@ -1,8 +1,8 @@
 ---
 title: About me
 subtitle: Learning data analytics
-description: Personal is the perfect theme for developers, designers and other creatives.
-featured_image: /images/demo/about.jpg
+description: This page describes internet-safe information about me and the beginning of my journey into data analytics.
+featured_image: /images/about.jpg
 ---
 
 ## Who
@@ -18,8 +18,11 @@ I am located in the Dallas-Fort Worth area of Texas.
 My journey started in September 2022 with the <a href="https://www.coursera.org/google-certificates/data-analytics-certificate" target="_blank">Coursera Google Data Analytics Course</a>.
 
 I completed the course in April 2023 with the following case studies:
-* <a href="">Cyclistic</a>
-* <a href="">Wellness</a>
+
+| Case Study               | Summary | Technology               |
+|--------------------------|---------|--------------------------|
+| <a href="">Cyclistic</a> | Analyze rider data from the last 12 months to identify trends in usage between member and casual riders. | Excel, R Studio, Tableau |
+| <a href="">Wellness</a>  |  | |
 
 {% assign currentDate = site.time | date: '%s' %}
 {% assign startDate = '2022-09-19' | date: '%s' %}
