@@ -7,7 +7,7 @@ featured_image: /images/about.jpg
 
 ## Who
 
-I'm a full-time paramedic with an interest in data analytics. It is my mission to learn how to collect, analyze, and share data to improve the world around me.
+I am a full-time paramedic with an interest in data analytics. It is my mission to learn how to collect, analyze, and share data to improve the world around me.
 
 ## Where
 
