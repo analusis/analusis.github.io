@@ -1,0 +1,132 @@
+---
+title: "CGDA - Case Study 1 - Process Data"
+output: html_document
+date: "2023-03-28"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(results = 'hide')
+knitr::opts_chunk$set(error = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+```
+
+## Load Packages
+```{r load packages}
+library(tidyverse)
+library(lubridate)
+```
+
+## Load CSV Files
+```{r load CSV files}
+d202203 <- read_csv("202203-divvy-tripdata.csv")
+d202204 <- read_csv("202204-divvy-tripdata.csv")
+d202205 <- read_csv("202205-divvy-tripdata.csv")
+d202206 <- read_csv("202206-divvy-tripdata.csv")
+d202207 <- read_csv("202207-divvy-tripdata.csv")
+d202208 <- read_csv("202208-divvy-tripdata.csv")
+d202209 <- read_csv("202209-divvy-publictripdata.csv")
+d202210 <- read_csv("202210-divvy-tripdata.csv")
+d202211 <- read_csv("202211-divvy-tripdata.csv")
+d202212 <- read_csv("202212-divvy-tripdata.csv")
+d202301 <- read_csv("202301-divvy-tripdata.csv")
+d202302 <- read_csv("202302-divvy-tripdata.csv")
+```
+
+## Quick Look
+Let's take a quick look at a dataframe:
+```{r quick look, results='markup'}
+colnames(d202203)
+spec(d202203)
+str(d202203)
+head(d202203)
+summary(d202203)
+```
+
+## Compare Column Names and Data Types
+Before we can begin processing the data, let's verify the column names and data types match across the data frames.
+
+```{r compare data frames, results='markup'}
+spec(d202203)
+spec(d202204)
+spec(d202205)
+spec(d202206)
+spec(d202207)
+spec(d202208)
+spec(d202209)
+spec(d202210)
+spec(d202211)
+spec(d202212)
+spec(d202301)
+spec(d202302)
+```
+
+## Combine Data Frames
+Combine data into a single data frame for further processing.
+```{r combine data frames, results='markup'}
+all_rides <- bind_rows(d202203, d202204, d202205, d202206, d202207, d202208, d202209, d202210, d202211, d202212, d202301, d202302)
+```
+
+### Clean Up Memory
+Remove the individual data frames from memory since we are done using them.
+```{r clean memory}
+rm(d202203, d202204, d202205, d202206, d202207, d202208, d202209, d202210, d202211, d202212, d202301, d202302)
+gc()
+```
+
+## Inspect the New Data Frame
+We'll verify the structure and sample data from the new data frame.
+```{r inspect combined data frame, results='markup'}
+colnames(all_rides)
+spec(all_rides)
+str(all_rides)
+head(all_rides)
+summary(all_rides)
+```
+
+## Remove Unused Data
+We'll filter out unused columns of data and save it to a new data frame for further processing.
+```{r remove unused data}
+filtered_rides <- all_rides %>%
+  select(-c(start_lat, start_lng, end_lat, end_lng))
+```
+
+## Inspect the Data Frame Again
+We conduct frequent verification of the changes that have been made.
+```{r verify filtered data, results='markup'}
+colnames(filtered_rides)
+nrow(filtered_rides)
+dim(filtered_rides)
+head(filtered_rides)
+str(filtered_rides)
+summary(filtered_rides)
+```
+
+## Familiarize and Verify Expected Values
+View unique column values. This both familiarizes the values as well as verifies that the data is consistent.
+```{r verify unique, results='markup'}
+unique(filtered_rides$rideable_type)
+unique(filtered_rides$member_casual)
+```
+### Filter Out Bad Datetime Data
+Verify the started_at datetime is before the ended_at datetime. If the started_at datetime is equal to or after the ended_at datetime, this will cause problems in analyzing trip durations. We will filter out any rows with started_at datetimes that occur at the same time as or after ended_at datetimes. The filtered rows will be saved to a separate data frame for review.
+```{r filter bad datetime, results='markup'}
+removed_rides <- filtered_rides %>%
+  filter(filtered_rides$started_at >= filtered_rides$ended_at)
+filtered_rides <- filtered_rides %>%
+  filter(filtered_rides$started_at < filtered_rides$ended_at)
+```
+
+### Verify the Data Frame After Filtering and Removing Rows
+```{r verify dimensions, results='markup', message=TRUE}
+cat('Total Original Rows: ', nrow(all_rides), '\nTotal Filtered Rows: ', nrow(filtered_rides), '\nTotal Removed Rows:  ', nrow(removed_rides), '\nTotal Filtered & Removed Rows: ', nrow(filtered_rides)+nrow(removed_rides))
+```
+Sample removed data:
+```{r results='markup'}
+head(removed_rides)
+```
+Sample filtered data:
+```{r results='markup'}
+head(filtered_rides)
+```
