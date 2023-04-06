@@ -3,7 +3,7 @@ title: 'Cyclistic - Rider Usage Trends'
 subtitle: 'Coursera Google Data Analytics - Case Study 1'
 date: 2018-06-30 00:00:00
 description: Analyze rider data from the last 12 months to identify trends in usage between member and casual riders.
-featured_image: '/images/projects/cgda/cs01/cover.png'
+featured_image: '/images/projects/cgda/cs01/cover.jpg'
 ---
 ## Introduction
 
