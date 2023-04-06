@@ -355,10 +355,13 @@ display: none;
 </div>
 
 
+<div id="process-the-data" class="section level1">
+<h1>Process the Data</h1>
+<p>We will begin the process phase by loading, transforming, and
+validating the data.</p>
 <div id="load-packages" class="section level2">
 <h2>Load Packages</h2>
-<pre class="r"><code>library(tidyverse)
-library(lubridate)</code></pre>
+<pre class="r"><code>library(tidyverse)</code></pre>
 </div>
 <div id="load-csv-files" class="section level2">
 <h2>Load CSV Files</h2>
@@ -912,6 +915,25 @@ filtered_rides &lt;- filtered_rides %&gt;%
 ## 6 9AA8A13AF7A85325 classic_bike  2022-03-07 17:10:22 2022-03-07 17:15:04
 ## # ℹ 5 more variables: start_station_name &lt;chr&gt;, start_station_id &lt;chr&gt;,
 ## #   end_station_name &lt;chr&gt;, end_station_id &lt;chr&gt;, member_casual &lt;chr&gt;</code></pre>
+</div>
+</div>
+<div id="save-the-data" class="section level2">
+<h2>Save the Data</h2>
+<p>Once we have addressed all errors and inconsistencies, we can
+conclude the filtering process. Now we will export the data into their
+respective CSV files for the Analyze Phase.</p>
+<div id="export-the-original-data" class="section level3">
+<h3>Export the Original Data</h3>
+<pre class="r"><code>write.csv(all_rides, file=&#39;original_rides.csv&#39;)</code></pre>
+</div>
+<div id="export-the-cleaned-data" class="section level3">
+<h3>Export the Cleaned Data</h3>
+<pre class="r"><code>write.csv(filtered_rides, file=&#39;cleaned_rides.csv&#39;)</code></pre>
+</div>
+<div id="export-the-bad-data" class="section level3">
+<h3>Export the Bad Data</h3>
+<pre class="r"><code>write.csv(removed_rides, file=&#39;removed_rides.csv&#39;)</code></pre>
+</div>
 </div>
 </div>
 

@@ -3,7 +3,8 @@ title: "CGDA - Case Study 1 - Process Data"
 output: html_document
 date: "2023-03-28"
 ---
-
+# Process the Data
+We will begin the process phase by loading, transforming, and validating the data.
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(results = 'hide')
@@ -15,7 +16,6 @@ knitr::opts_chunk$set(message = FALSE)
 ## Load Packages
 ```{r load packages}
 library(tidyverse)
-library(lubridate)
 ```
 
 ## Load CSV Files
@@ -129,4 +129,21 @@ head(removed_rides)
 Sample filtered data:
 ```{r results='markup'}
 head(filtered_rides)
+```
+## Save the Data
+Once we have addressed all errors and inconsistencies, we can conclude the filtering process. Now we will export the data into their respective CSV files for the Analyze Phase.
+
+### Export the Original Data
+```{r export original data, eval=FALSE}
+write.csv(all_rides, file='original_rides.csv')
+```
+
+### Export the Cleaned Data
+```{r export cleaned data, eval=FALSE}
+write.csv(filtered_rides, file='cleaned_rides.csv')
+```
+
+### Export the Bad Data
+```{r export bad data, eval=FALSE}
+write.csv(removed_rides, file='removed_rides.csv')
 ```

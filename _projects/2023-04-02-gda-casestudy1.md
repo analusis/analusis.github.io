@@ -63,20 +63,27 @@ The data has been supplied by Cyclistic and there is no supposition of bias. The
 ### Process
 #### Choose your tools.
 
-I am using [Excel](https://www.microsoft.com/en-us/microsoft-365/excel) to take a quick look at the data and familiarize myself. Due to there being a few million records, I am using the [R programming language](https://www.r-project.org/) with [R Studio](https://posit.co/download/rstudio-desktop/) to check for errors and clean the data.
+I am using [Excel](https://www.microsoft.com/en-us/microsoft-365/excel) to take a quick look at the data and familiarize myself. Due to there being a few million records, I am using the [R programming language](https://www.r-project.org/) with [R Studio](https://posit.co/download/rstudio-desktop/) to check for errors as well as transform and clean the data.
 
 #### Check the data for errors.
 
 The data was evaluated using R Studio. The individual data files were loaded into data frames and then combined into a single data frame for further processing. The resulting data frame was inspected further and columns not being used for this analysis were removed. Columns were evaluated for inconsistent values (such as differences in member_casual) and bad datetime values, such as start times occuring after end times, were removed. The removed rows were separated from the data frame but saved separately for transparency and possible future correction.
 
 #### Transform the data so you can work with it effectively.
+
+Data transformation was performed by loading the data into an R dataframe for processing. Detection of data types and familiarization of the structure was performed. If inconsistencies were found, they were noted for immediate action and future analysis purposes.
+
 #### Document the cleaning process.
+The cleaning and transformation processes were documented in an R Markdown file for repeatability and transparency. The log is available in the Deliverable table below.
 
 | Deliverable                          |
 |--------------------------------------|
 | {::nomarkdown}<iframe src="{{ site.url }}/downloads/2023-04-02-gda-cs1/cs1-process.html" width="100%" height="400" frameborder="0" allowfullscreen></iframe>{:/} |
-| [Download the R Markdown HTML output log]({{ site.url }}/downloads/2023-04-02-gda-cs1/cs1-process.html) |
-| [Download the R Markdown file]({{ site.url }}/downloads/2023-04-02-gda-cs1/cs1-process.Rmd)
+| [View the R Markdown HTML output log]({{ site.url }}/downloads/2023-04-02-gda-cs1/cs1-process.html) |
+| [Download the R Markdown file]({{ site.url }}/downloads/2023-04-02-gda-cs1/cs1-process.Rmd) |
+| The original data is 1.12 GB in size and contains 5,829,084 records. |
+| The cleaned data is 896 MB in size and contains 5,828,546 records. |
+| [Download the removed data.]({{ site.url }}/downloads/2023-04-02-gda-cs1/removed_rides.csv) The removed data is 80.8 KB in size and contains 538 records. |
 
 
 
@@ -109,94 +116,6 @@ The data was evaluated using R Studio. The individual data files were loaded int
 |--------------------------------------|
 |                                      |
 
-=======================================================
-
-**Obviously,** we’ve styled up *all the basic* text formatting options [available in markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
-
-You can create lists:
-
-* Simple bulleted lists
-* Like this one
-* Are cool
-
-And:
-
-1. Numbered lists
-2. Like this other one
-3. Are great too
-
-You can also add blockquotes, which are shown at a larger width to help break up the layout and draw attention to key parts of your content:
-
-> “Simple can be harder than complex: You have to work hard to get your thinking clean to make it simple. But it’s worth it in the end because once you get there, you can move mountains.”
-
-The theme also supports markdown tables:
-
-| Item                 | Author        | Supports tables? | Price |
-|----------------------|---------------|------------------|-------|
-| Duet Jekyll Theme    | Jekyll Themes | Yes              | $49   |
-| Index Jekyll Theme   | Jekyll Themes | Yes              | $49   |
-| Journal Jekyll Theme | Jekyll Themes | Yes              | $49   |
-
-
 [^1]: This business task is fictional through the Coursera Google Data Analytics Certificate Course under the fictional company name Cyclistic. The task uses real-world data provided by [Divvy](https://divvybikes.com/), which is a program of the [Chicago Department of Transportation](https://www.chicago.gov/city/en/depts/cdot.html) in Illinois, United States.
 
 [^2]:  The data belongs to and originated from Divvy. The data is provided according to the Divvy Data License Agreement. The data has been anonymized by Divvy and is public-access. In accordance with the Divvy Data License Agreement, no attempt will be made to deanonymize or correlate the data with PII or members of the program. This case study is not affiliated with, endorsed by, or sponsored by [Divvy](https://divvybikes.com/) or the [Chicago DOT](https://www.chicago.gov/city/en/depts/cdot.html).
-
-You can throw in some horizontal rules too:
-
----
-
-### Image galleries
-
-Here's a really neat custom feature we added – galleries:
-
-<div class="gallery" data-columns="3">
-	<img src="/images/demo/demo-portrait.jpg">
-	<img src="/images/demo/demo-landscape.jpg">
-	<img src="/images/demo/demo-square.jpg">
-	<img src="/images/demo/demo-landscape-2.jpg">
-</div>
-
-Inspired by the Galleries feature from WordPress, we've made it easy to create grid layouts for your images. Just use a bit of simple HTML in your post to create a masonry grid image layout:
-
-```html
-<div class="gallery" data-columns="3">
-    <img src="/images/demo/demo-portrait.jpg">
-    <img src="/images/demo/demo-landscape.jpg">
-    <img src="/images/demo/demo-square.jpg">
-    <img src="/images/demo/demo-landscape-2.jpg">
-</div>
-```
-
-*See what we did there? Code and syntax highlighting is built-in too!*
-
-Change the number inside the 'columns' setting to create different types of gallery for all kinds of purposes. You can even click on each image to seamlessly enlarge it on the page.
-
----
-
-### Image carousels
-
-Here's another gallery with only one column, which creates a carousel slide-show instead.
-
-A nice little feature: the carousel only advances when it is in view, so your visitors won't scroll down to find it half way through your images.
-
-<div class="gallery" data-columns="1">
-	<img src="/images/demo/demo-landscape.jpg">
-	<img src="/images/demo/demo-landscape-2.jpg">
-</div>
-
-### What about videos?
-
-Videos are an awesome way to show off your work in a more engaging and personal way, and we’ve made sure they work great on our themes. Just paste an embed code from YouTube or Vimeo, and the theme makes sure it displays perfectly:
-
-<iframe src="https://player.vimeo.com/video/148003889" width="640" height="360" frameborder="0" allowfullscreen></iframe>
-
----
-
-## Pretty cool, huh?
-
-We've packed this theme with powerful features to show off your work.
-
-Why not put them to use on your new portfolio?
-
-<a href="https://jekyllthemes.io/theme/personal-website-jekyll-theme" class="button button--large">Get This Theme</a>
