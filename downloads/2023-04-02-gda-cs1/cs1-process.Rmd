@@ -134,16 +134,16 @@ head(filtered_rides)
 Once we have addressed all errors and inconsistencies, we can conclude the filtering process. Now we will export the data into their respective CSV files for the Analyze Phase.
 
 ### Export the Original Data
-```{r export original data, eval=FALSE}
-write.csv(all_rides, file='original_rides.csv')
+```{r export original data}
+write.csv(all_rides, file='original_rides.csv', row.names=FALSE)
 ```
 
 ### Export the Cleaned Data
-```{r export cleaned data, eval=FALSE}
-write.csv(filtered_rides, file='cleaned_rides.csv')
+```{r export cleaned data}
+write.csv(filtered_rides, file='cleaned_rides.csv', row.names=FALSE)
 ```
 
 ### Export the Bad Data
-```{r export bad data, eval=FALSE}
-write.csv(removed_rides, file='removed_rides.csv')
+```{r export bad data}
+write.csv(removed_rides, file='removed_rides.csv', row.names=FALSE)
 ```

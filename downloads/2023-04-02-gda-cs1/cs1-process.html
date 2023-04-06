@@ -924,15 +924,15 @@ conclude the filtering process. Now we will export the data into their
 respective CSV files for the Analyze Phase.</p>
 <div id="export-the-original-data" class="section level3">
 <h3>Export the Original Data</h3>
-<pre class="r"><code>write.csv(all_rides, file=&#39;original_rides.csv&#39;)</code></pre>
+<pre class="r"><code>write.csv(all_rides, file=&#39;original_rides.csv&#39;, row.names=FALSE)</code></pre>
 </div>
 <div id="export-the-cleaned-data" class="section level3">
 <h3>Export the Cleaned Data</h3>
-<pre class="r"><code>write.csv(filtered_rides, file=&#39;cleaned_rides.csv&#39;)</code></pre>
+<pre class="r"><code>write.csv(filtered_rides, file=&#39;cleaned_rides.csv&#39;, row.names=FALSE)</code></pre>
 </div>
 <div id="export-the-bad-data" class="section level3">
 <h3>Export the Bad Data</h3>
-<pre class="r"><code>write.csv(removed_rides, file=&#39;removed_rides.csv&#39;)</code></pre>
+<pre class="r"><code>write.csv(removed_rides, file=&#39;removed_rides.csv&#39;, row.names=FALSE)</code></pre>
 </div>
 </div>
 </div>
