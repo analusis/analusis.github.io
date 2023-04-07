@@ -89,13 +89,17 @@ The cleaning and transformation processes were documented in an R Markdown file 
 
 ### Analyze
 #### Aggregate your data so it's useful and accessible.
-#### Organize and format your data.
-#### Perform calculations.
+The started_at datetime field was split into individual items while maintaining the original data in the started_at column. Two addtional new columns were created from existing data to aid in discovering trends, a weekday column based on the started_at date, and a ride_length column to calculate the duration of each ride.
+
 #### Identify trends and relationships.
+Univariate and bivariate analyses were performed to identify trends in the data. ggplot2 was utilized to create a quick look at possible trends in preparation for the Share phase.
 
 | Deliverable                          |
 |--------------------------------------|
-|                                      |
+| {::nomarkdown}<iframe src="{{ site.url }}/downloads/2023-04-02-gda-cs1/cs1-analyze.html" width="100%" height="400" frameborder="0" allowfullscreen></iframe>{:/} |
+| [View the R Markdown HTML output log]({{ site.url }}/downloads/2023-04-02-gda-cs1/cs1-analyze.html) |
+| [Download the R Markdown file]({{ site.url }}/downloads/2023-04-02-gda-cs1/cs1-analyze.Rmd) |
+| The analyzed data is 1.05 GB in size and contains 5,828,546 records. |
 
 ### Share
 #### Determine the best way to share your findings.
