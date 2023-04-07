@@ -1,0 +1,148 @@
+---
+title: "CGDA - Case Study 1 - Analyze Data"
+output: html_document
+date: "2023-03-29"
+---
+# Analyze the Data
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(results = 'hide')
+knitr::opts_chunk$set(error = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+```
+
+## Load Packages
+```{r load packages}
+library(tidyverse)
+library(lubridate)
+library(scales)
+```
+
+## Load CSV File
+We will load the previously-cleaned ride data.
+```{r load csv into data frame}
+all_rides <- read_csv("cleaned_rides.csv")
+```
+
+## Quick Look
+Take a quick look at the structure of the data frame.
+```{r quick look, results='markup'}
+glimpse(all_rides)
+```
+
+## Aggregate Data & Perform Calculations for New Columns
+Aggregating/Deaggregating data and performing calculations to create new views of the same data can aid in finding trends.
+
+### Deaggregate Ride Dates
+We will split the started_at datetime into separate fields for further analysis.
+```{r deaggregate started_at}
+all_rides$date <- as.Date(all_rides$started_at)
+all_rides$month <- format(as.Date(all_rides$date), "%m")
+all_rides$day <- format(as.Date(all_rides$date), "%d")
+all_rides$year <- format(as.Date(all_rides$date), "%Y")
+```
+
+### Add a Weekday Column
+We will add a weekday column calculated from the ride date.
+```{r add a ride weekday}
+all_rides$day_of_week <- format(as.Date(all_rides$date), "%A")
+```
+
+### Add a Ride Duration Column
+We will calculate the length of the ride in seconds and add it to a new column, ride_length
+```{r add a ride duration}
+all_rides$ride_length <- difftime(all_rides$ended_at, all_rides$started_at)
+# convert the ride_length from factor to numeric so we can run calculations
+all_rides$ride_length <- as.numeric(as.character(all_rides$ride_length))
+```
+
+## Verify the Calculated Data
+We will verify the new structure and sample data from the data frame.
+```{r verify changes, results='markup'}
+glimpse(all_rides)
+head(all_rides)
+```
+
+## Conduct Analysis of the Data
+
+### View Summary Data of ride_length
+```{r analysis-summary ride_length, results='markup'}
+summary(all_rides$ride_length)
+```
+
+### Compare ride_length Between Members and Casual Riders
+```{r analysis-compare ride_length, results='markup'}
+aggregate(all_rides$ride_length ~ all_rides$member_casual, FUN=mean)
+aggregate(all_rides$ride_length ~ all_rides$member_casual, FUN=median)
+aggregate(all_rides$ride_length ~ all_rides$member_casual, FUN=max)
+aggregate(all_rides$ride_length ~ all_rides$member_casual, FUN=min)
+```
+
+### Compare ride_length by Number of Rides & Weekday Between Members and Casual Riders
+```{r analysis-compare duration with weekday between rider types, results='markup'}
+all_rides %>%
+  mutate(weekday = wday(started_at, label=TRUE)) %>%
+  group_by(member_casual, weekday) %>%
+  summarize(number_of_rides = n(), average_duration = mean(ride_length)) %>%
+  arrange(weekday, member_casual)
+```
+
+### Compare Total Rides & Total Duration Between Members and Casual Riders
+```{r analysis-compare totals between rider types}
+all_rides %>%
+  group_by(member_casual) %>%
+  summarize(number_of_rides = n(), average_duration=sum(ride_length)) %>%
+  arrange(member_casual)
+```
+
+## Create Plots
+We will create some plots to take a quick look at the data for visual trends.
+
+### Plot Number of Rides by Weekday & Rider Type
+```{r plot num rides by weekday/riderType, results='markup'}
+all_rides %>%
+  mutate(weekday = wday(started_at, label=TRUE)) %>%
+  group_by(member_casual, weekday) %>%
+  summarize(number_of_rides = n(), average_duration=mean(ride_length)) %>%
+  arrange(member_casual, weekday) %>%
+  ggplot(aes(x=weekday, y=number_of_rides, fill=member_casual)) + geom_col(position="dodge") + scale_y_continuous(labels = scales::label_number_si())
+```
+
+### Plot Average Duration by Weekday & Rider Type
+```{r plot avg duration by weekday/riderType, results='markup'}
+all_rides %>%
+  mutate(weekday = wday(started_at, label=TRUE)) %>%
+  group_by(member_casual, weekday) %>%
+  summarize(number_of_rides = n(), average_duration=mean(ride_length)) %>%
+  arrange(member_casual, weekday) %>%
+  ggplot(aes(x=weekday, y=average_duration, fill=member_casual)) + geom_col(position="dodge") + scale_y_time()
+```
+
+### Plot Number of Rides by Month & Rider Type
+```{r plot num rides by month/riderType, results='markup'}
+all_rides %>%
+  mutate(monthyear = floor_date(date, unit="month")) %>%
+  group_by(member_casual, monthyear) %>%
+  summarize(number_of_rides = n(), average_duration=mean(ride_length)) %>%
+  arrange(monthyear, member_casual) %>%
+  ggplot(aes(x=monthyear, y=number_of_rides, fill=member_casual)) + geom_col(position="dodge") + scale_y_continuous(labels = scales::label_number_si()) + scale_x_date(NULL, date_labels='%b %y', breaks='month')
+```
+
+### Plot Average Duration by Month & Rider Type
+```{r plot avg duration by month/riderType, results='markup'}
+all_rides %>%
+  mutate(monthyear = floor_date(date, unit="month")) %>%
+  group_by(member_casual, monthyear) %>%
+  summarize(number_of_rides = n(), average_duration=mean(ride_length)) %>%
+  arrange(monthyear, member_casual) %>%
+  ggplot(aes(x=monthyear, y=average_duration, fill=member_casual)) + geom_col(position="dodge") + scale_y_time() + scale_x_date(NULL, date_labels='%b %y', breaks='month')
+```
+
+## Export Analysis and Data Frame with Calculated Values
+This markdown will be exported for an analysis summary.
+
+Next we will export the data frame with the new calculated values.
+```{r export csv, eval=FALSE}
+write.csv(all_rides, file='analyzed_rides.csv', row.names=FALSE)
+```
