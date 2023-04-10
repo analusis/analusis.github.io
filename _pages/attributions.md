@@ -20,6 +20,8 @@ Attribution page photo by <a href="https://pixabay.com/users/jarmoluk-143740/?ut
 
 CGDA Case Study 1 project page photo by <a href="https://pixabay.com/users/andrzejrembowski-2775184/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=4245347" target="_blank">Andrzej Rembowski</a> via <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=4245347" target="_blank">Pixabay</a>
 
+CGDA Case Study 2 project page photo by <a href="https://pixabay.com/users/stevepb-282134/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=2465478" target="_blank">Steve Buissinne</a> via <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=2465478" target="_blank">Pixabay</a>
+
 ### Website Host
 <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
 
