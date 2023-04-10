@@ -102,14 +102,26 @@ Univariate and bivariate analyses were performed to identify trends in the data.
 | The analyzed data is 1.05 GB in size and contains 5,828,546 records. |
 
 ### Share
+
 #### Determine the best way to share your findings.
-#### Create effective data visualizations.
+I am using Tableau to create charts based on historical data. The charts are separated into individual worksheets for viewing on Tableau.
+<div class="gallery" data-columns="4">
+	<img src="/downloads/2023-04-02-gda-cs1/gallery/01.png">
+	<img src="/downloads/2023-04-02-gda-cs1/gallery/02.png">
+    <img src="/downloads/2023-04-02-gda-cs1/gallery/03.png">
+    <img src="/downloads/2023-04-02-gda-cs1/gallery/04.png">
+    <img src="/downloads/2023-04-02-gda-cs1/gallery/05.png">
+    <img src="/downloads/2023-04-02-gda-cs1/gallery/06.png">
+    <img src="/downloads/2023-04-02-gda-cs1/gallery/07.png">
+</div>
+
 #### Present your findings.
-#### Ensure your work is accessible.
+PowerPoint was utilized to create a presentation. I sought to use contrasting colors with clear text and clean design.
 
 | Deliverable                          |
 |--------------------------------------|
-|                                      |
+| [View Charts in Tableau](https://public.tableau.com/app/profile/analusis/viz/CGDA-CaseStudy1/TrendCombinedbyMonthYear) |
+| [Download the PowerPoint Presentation]({{ site.url }}/downloads/2023-04-02-gda-cs1/CyclisticRiderTrends.pptx) |
 
 ### Act
 #### Create your portfolio.
