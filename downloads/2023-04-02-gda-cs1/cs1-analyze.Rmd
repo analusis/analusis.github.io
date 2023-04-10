@@ -89,10 +89,10 @@ all_rides %>%
 ```
 
 ### Compare Total Rides & Total Duration Between Members and Casual Riders
-```{r analysis-compare totals between rider types}
+```{r analysis-compare totals between rider types, results='markup'}
 all_rides %>%
   group_by(member_casual) %>%
-  summarize(number_of_rides = n(), average_duration=sum(ride_length)) %>%
+  summarize(number_of_rides = n(), sum_duration=sum(ride_length)) %>%
   arrange(member_casual)
 ```
 

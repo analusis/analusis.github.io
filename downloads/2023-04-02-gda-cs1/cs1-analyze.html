@@ -507,8 +507,13 @@ and Casual Riders</h3>
 Riders</h3>
 <pre class="r"><code>all_rides %&gt;%
   group_by(member_casual) %&gt;%
-  summarize(number_of_rides = n(), average_duration=sum(ride_length)) %&gt;%
+  summarize(number_of_rides = n(), sum_duration=sum(ride_length)) %&gt;%
   arrange(member_casual)</code></pre>
+<pre><code>## # A tibble: 2 × 3
+##   member_casual number_of_rides sum_duration
+##   &lt;chr&gt;                   &lt;int&gt;        &lt;dbl&gt;
+## 1 casual                2364857   4107332578
+## 2 member                3463689   2614659372</code></pre>
 </div>
 </div>
 <div id="create-plots" class="section level2">
