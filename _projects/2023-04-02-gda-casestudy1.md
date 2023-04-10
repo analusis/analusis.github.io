@@ -89,7 +89,7 @@ The cleaning and transformation processes were documented in an R Markdown file 
 
 ### Analyze
 #### Aggregate your data so it's useful and accessible.
-The started_at datetime field was split into individual items while maintaining the original data in the started_at column. Two addtional new columns were created from existing data to aid in discovering trends, a weekday column based on the started_at date, and a ride_length column to calculate the duration of each ride.
+The started_at datetime field was split into individual items while maintaining the original data in the started_at column. Two additional new columns were created from existing data to aid in discovering trends, a weekday column based on the started_at date, and a ride_length column to calculate the duration of each ride.
 
 #### Identify trends and relationships.
 Univariate and bivariate analyses were performed to identify trends in the data. ggplot2 was utilized to create a quick look at possible trends in preparation for the Share phase.
@@ -116,7 +116,7 @@ I am using Tableau to create charts based on historical data. The charts are sep
 </div>
 
 #### Present your findings.
-PowerPoint was utilized to create a presentation. I sought to use contrasting colors with clear text and clean design.
+PowerPoint was utilized to create a presentation. I sought to use contrasting colors with clear text and clean design. A shorter presentation style was created with the intention of summarized text and easy-to-read graphics to keep viewer engagement higher.
 
 | Deliverable                          |
 |--------------------------------------|
@@ -125,12 +125,19 @@ PowerPoint was utilized to create a presentation. I sought to use contrasting co
 
 ### Act
 #### Create your portfolio.
-#### Add your case study.
+I created this website using GitHub Pages and Jekyll to document my case study progress. 
+
 #### Practice presenting your case study.
+Using the colleague test, I worked to refine my presentation and delivery. This allowed me to identify areas of confusion that could be clarified or data gaps that further analysis or data collection could uncover.
 
 | Deliverable                          |
 |--------------------------------------|
-|                                      |
+| [https://analusis.dev]({{ site.url }}) |
+
+
+## Thank you!
+Thank you for taking the time to review my case study from the Coursera Google Data Analytics course. This course has given me valuable knowledge and skills that I will continue to improve with future studies, as this is only the beginning of my journey into data analytics, 
+
 
 [^1]: This business task is fictional through the Coursera Google Data Analytics Certificate Course under the fictional company name Cyclistic. The task uses real-world data provided by [Divvy](https://divvybikes.com/), which is a program of the [Chicago Department of Transportation](https://www.chicago.gov/city/en/depts/cdot.html) in Illinois, United States.
 
