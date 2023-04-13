@@ -1,0 +1,328 @@
+---
+title: "CGDA - Case Study 2 - Process Phase"
+output: html_notebook
+date: "2023-04-10"
+---
+
+```{r set outputs, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(results = 'hide')
+knitr::opts_chunk$set(error = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+```
+
+# Process Data
+
+## Load Packages
+First we'll load in packages for the processing phase.
+
+- tidyverse: a collection of data analysis packages
+- janitor: data cleaning functions
+- skimr: provides summary statistics
+```{r load packages}
+# knit options have suppressed any output for readability
+library(tidyverse)
+library(janitor)
+library(skimr)
+library(knitr)
+```
+
+```{r update outputs, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(results = 'markup')
+knitr::opts_chunk$set(error = TRUE)
+knitr::opts_chunk$set(warning = TRUE)
+knitr::opts_chunk$set(message = TRUE)
+```
+
+## Read CSV into Tibbles
+Next we'll use read_csv to load the individual data files into their own tibbles. We are explicitly setting the column types for date/datetime instead of relying on the guess function.
+```{r load data into dataframes for ev}
+df_activity_daily <- read_csv('activity_daily.csv',
+                              col_types=cols(
+                                ActivityDate = col_date(format="%m/%d/%Y"),
+                              ))
+df_calories_daily <- read_csv('calories_daily.csv',
+                              col_types=cols(
+                                ActivityDay = col_date(format="%m/%d/%Y"),
+                              ))
+df_calories_hourly <- read_csv('calories_hourly.csv',
+                              col_types=cols(
+                                ActivityHour = col_datetime(format="%m/%d/%Y %I:%M:%S %p"),
+                              ))
+df_calories_min_narrow <- read_csv('calories_minutes_narrow.csv',
+                              col_types=cols(
+                                ActivityMinute = col_datetime(format="%m/%d/%Y %I:%M:%S %p"),
+                              ))
+df_calories_min_wide <- read_csv('calories_minutes_wide.csv',
+                              col_types=cols(
+                                ActivityHour = col_datetime(format="%m/%d/%Y %I:%M:%S %p"),
+                              ))
+df_hr_by_sec <- read_csv('heartrate_by_seconds.csv',
+                              col_types=cols(
+                                Time = col_datetime(format="%m/%d/%Y %I:%M:%S %p"),
+                              ))
+df_intensity_daily <- read_csv('intensity_daily.csv',
+                              col_types=cols(
+                                ActivityDay = col_date(format="%m/%d/%Y"),
+                              ))
+df_intensity_hourly <- read_csv('intensity_hourly.csv',
+                              col_types=cols(
+                                ActivityHour = col_datetime(format="%m/%d/%Y %I:%M:%S %p"),
+                              ))
+df_intensity_min_narrow <- read_csv('intensity_minutes_narrow.csv',
+                              col_types=cols(
+                                ActivityMinute = col_datetime(format="%m/%d/%Y %I:%M:%S %p"),
+                              ))
+df_intensity_min_wide <- read_csv('intensity_minutes_wide.csv',
+                              col_types=cols(
+                                ActivityHour = col_datetime(format="%m/%d/%Y %I:%M:%S %p"),
+                              ))
+df_met_min_narrow <- read_csv('met_minutes_narrow.csv',
+                              col_types=cols(
+                                ActivityMinute = col_datetime(format="%m/%d/%Y %I:%M:%S %p"),
+                              ))
+df_sleep_daily <- read_csv('sleep_daily.csv',
+                              col_types=cols(
+                                SleepDay = col_datetime(format="%m/%d/%Y %I:%M:%S %p"),
+                              ))
+df_sleep_minutes <- read_csv('sleep_minutes.csv',
+                              col_types=cols(
+                                date = col_datetime(format="%m/%d/%Y %I:%M:%S %p"),
+                              ))
+df_steps_daily <- read_csv('steps_daily.csv',
+                              col_types=cols(
+                                ActivityDay = col_date(format="%m/%d/%Y"),
+                              ))
+df_steps_hourly <- read_csv('steps_hourly.csv',
+                              col_types=cols(
+                                ActivityHour = col_datetime(format="%m/%d/%Y %I:%M:%S %p"),
+                              ))
+df_steps_min_narrow <- read_csv('steps_minutes_narrow.csv',
+                              col_types=cols(
+                                ActivityMinute = col_datetime(format="%m/%d/%Y %I:%M:%S %p"),
+                              ))
+df_steps_min_wide <- read_csv('steps_minutes_wide.csv',
+                              col_types=cols(
+                                ActivityHour = col_datetime(format="%m/%d/%Y %I:%M:%S %p"),
+                              ))
+df_weight <- read_csv('weight_log.csv',
+                              col_types=cols(
+                                Date = col_datetime(format="%m/%d/%Y %I:%M:%S %p"),
+                              ))
+```
+
+## Clean Data
+We will begin the cleaning process. Analyzing bad data can inhibit trends or cause inaccurate conclusions to be drawn. There are several things we look at when cleaning data:
+
+* Missing data - including null values. 0 is an acceptable value for a number data type.
+* Duplicate data - in this case, we will assess id and date/datetime as there should only be one record per pair
+* Incorrect data types - for example, a numeric value loaded as a string would prevent statistical analysis
+* Column names - column names with symbols or complex names become difficult to reference
+
+We will process each set of data separately and completely before moving to the next set of data.
+
+```{r clean data}
+# standardize column names
+df_activity_daily <- clean_names(df_activity_daily)
+# check for duplicates based on the user id and the date/datetime
+get_dupes(df_activity_daily, id, activity_date)
+# evaluate statistical data and amount of data
+df_activity_daily %>%
+  skim_tee() %>%
+  summary()
+
+df_calories_daily <- clean_names(df_calories_daily)
+get_dupes(df_calories_daily, id, activity_day)
+df_calories_daily %>%
+  skim_tee() %>%
+  summary()
+
+df_calories_hourly <- clean_names(df_calories_hourly)
+get_dupes(df_calories_hourly, id, activity_hour)
+df_calories_hourly %>%
+  skim_tee() %>%
+  summary()
+
+df_calories_min_narrow <- clean_names(df_calories_min_narrow)
+get_dupes(df_calories_min_narrow, id, activity_minute)
+df_calories_min_narrow %>%
+  skim_tee() %>%
+  summary()
+
+df_calories_min_wide <- clean_names(df_calories_min_wide)
+get_dupes(df_calories_min_wide, id, activity_hour)
+df_calories_min_wide %>%
+  skim_tee() %>%
+  summary()
+
+df_hr_by_sec <- clean_names(df_hr_by_sec)
+get_dupes(df_hr_by_sec, id, time)
+df_hr_by_sec %>%
+  skim_tee() %>%
+  summary()
+
+df_intensity_daily <- clean_names(df_intensity_daily)
+get_dupes(df_intensity_daily, id, activity_day)
+df_intensity_daily %>%
+  skim_tee() %>%
+  summary()
+
+df_intensity_hourly <- clean_names(df_intensity_hourly)
+get_dupes(df_intensity_hourly, id, activity_hour)
+df_intensity_hourly %>%
+  skim_tee() %>%
+  summary()
+
+df_intensity_min_narrow <- clean_names(df_intensity_min_narrow)
+get_dupes(df_intensity_min_narrow, id, activity_minute)
+df_intensity_min_narrow %>%
+  skim_tee() %>%
+  summary()
+
+df_intensity_min_wide <- clean_names(df_intensity_min_wide)
+get_dupes(df_intensity_min_wide, id, activity_hour)
+df_intensity_min_wide %>%
+  skim_tee() %>%
+  summary()
+
+df_met_min_narrow <- clean_names(df_met_min_narrow)
+get_dupes(df_met_min_narrow, id, activity_minute)
+df_met_min_narrow %>%
+  skim_tee() %>%
+  summary()
+
+df_sleep_daily <- clean_names(df_sleep_daily)
+get_dupes(df_sleep_daily, id, sleep_day)
+df_sleep_daily %>%
+  skim_tee() %>%
+  summary()
+
+df_sleep_minutes <- clean_names(df_sleep_minutes)
+get_dupes(df_sleep_minutes, id, date)
+df_sleep_minutes %>%
+  skim_tee() %>%
+  summary()
+
+df_steps_daily <- clean_names(df_steps_daily)
+get_dupes(df_steps_daily, id, activity_day)
+df_steps_daily %>%
+  skim_tee() %>%
+  summary()
+
+df_steps_hourly <- clean_names(df_steps_hourly)
+get_dupes(df_steps_hourly, id, activity_hour)
+df_steps_hourly %>%
+  skim_tee() %>%
+  summary()
+
+df_steps_min_narrow <- clean_names(df_steps_min_narrow)
+get_dupes(df_steps_min_narrow, id, activity_minute)
+df_steps_min_narrow %>%
+  skim_tee() %>%
+  summary()
+
+df_steps_min_wide <- clean_names(df_steps_min_wide)
+get_dupes(df_steps_min_wide, id, activity_hour)
+df_steps_min_wide %>%
+  skim_tee() %>%
+  summary()
+
+df_weight <- clean_names(df_weight)
+get_dupes(df_weight, id, date)
+df_weight %>%
+  skim_tee() %>%
+  summary()
+```
+
+### Remove Duplicate Data
+Both sleep datasets were noted to contain duplicate data. We will remove the duplicate data and continue processing.
+```{r remove duplicate data}
+df_sleep_daily <- distinct(df_sleep_daily)
+df_sleep_minutes <- distinct(df_sleep_minutes)
+get_dupes(df_sleep_daily, id, sleep_day)
+get_dupes(df_sleep_minutes, id, date)
+skim_without_charts(df_sleep_daily)
+skim_without_charts(df_sleep_minutes)
+```
+
+### Check Sample Size by id column
+The data source relayed that 30 participants were part of the study. We'll notate how much data we have in each dataset by unique id.
+```{r sample sizes}
+n_distinct(df_activity_daily$id)
+n_distinct(df_calories_daily$id)
+n_distinct(df_calories_hourly$id)
+n_distinct(df_calories_min_narrow$id)
+n_distinct(df_calories_min_wide$id)
+n_distinct(df_hr_by_sec$id)
+n_distinct(df_intensity_daily$id)
+n_distinct(df_intensity_hourly$id)
+n_distinct(df_intensity_min_narrow$id)
+n_distinct(df_intensity_min_wide$id)
+n_distinct(df_met_min_narrow$id)
+n_distinct(df_sleep_daily$id)
+n_distinct(df_sleep_minutes$id)
+n_distinct(df_steps_daily$id)
+n_distinct(df_steps_hourly$id)
+n_distinct(df_steps_min_narrow$id)
+n_distinct(df_steps_min_wide$id)
+n_distinct(df_weight$id)
+```
+
+#### Sample Size Results
+While the data source relayed 30 participants, it appears that there were actually 33.
+Four datasets are noted to have less than 33 participants:
+
+* Heartrate by seconds
+* Sleep Daily
+* Sleep Minutes
+* Weight Log
+
+```{r sample size table, echo=FALSE}
+samples_df <- tibble(
+  Data = c(
+    'Daily Activity','Daily Calories', 'Daily Intensity', 'Daily Sleep', 'Daily Steps', 'Hourly Calories', 'Hourly Intensity', 'Hourly Steps', 'Minutes-Calories', 'Minutes-Intensity', 'Minutes-MET', 'Minutes-Sleep', 'Minutes-Steps', 'Seconds-HR', 'Weight', 'Wide-Calories', 'Wide-Intensity', 'Wide-Steps'
+  ),
+  Records = c(
+    940,940,940,410,940,22099,22099,22099,1325580,1325580,1325580,187978,1325580,2483658,67,21645,21645,21645
+  ),
+  Participants = c(
+    33,33,33,24,33,33,33,33,33,33,33,24,33,14,8,33,33,33
+  )
+)
+```
+
+```{r echo=FALSE, results='asis'}
+kable(samples_df, caption='Sample Evaluation')
+```
+
+## Cleaning Results
+We have inspected the data, removed duplicate records, and evaluated for missing data.
+
+## Transform Data
+Next we will join similar data and transform it by mutating or separating fields for future analysis.
+
+### Daily Data
+#### Join Daily Data
+We will start by joining the daily data into one dataset.
+
+## Export Data
+
+## Next Steps
+Below are the next steps for aggregation during the Analyze phase:
+
+* Aggregate all daily data (we are missing sleep records for 9 participants)
+* Aggregate all hourly data
+* Aggregate all narrow minutes data (we are missing sleep records for 9 participants)
+
+The following data will be available for limited analysis due to incomplete data recording:
+
+* Weight
+* Heart rate by seconds
+
+The following data will be excluded from analysis due to being duplicated data but in wide format:
+
+* Wide-Minutes Calories
+* Wide-Minutes Intensity
+* Wide-Minutes Steps
