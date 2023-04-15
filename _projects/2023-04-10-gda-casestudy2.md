@@ -50,7 +50,7 @@ The data is organized in wide format in multiple CSV files. There are 18 files, 
 
 #### Determine the credibility of the data.
 
-The data was supplied by Kaggle user [Möbius](https://www.kaggle.com/arashnic) but appears to have originated from a survey conducted by Amazon Mechanical Turk and originally available through [Zenodo](https://zenodo.org/record/53894).
+The data was supplied by Kaggle user [Möbius](https://www.kaggle.com/arashnic) but appears to have originated from a survey conducted via Amazon Mechanical Turk and originally available through [Zenodo](https://zenodo.org/record/53894).
 
 **We will determine the credibility of the data using the ROCCC method:**
 ##### Reliable
@@ -60,7 +60,7 @@ The data is incomplete as it does not contain consistent data among all responde
 The data is not original. It is supplied by a third-party.
 
 ##### Comprehensive
-Some of the data provided is missing responses by participants. Additionally, the data only contains approximately two months of data. Trend insights could be affected in that there is not enough data over time to analyze or develop a clear picture of usage.
+Some of the data provided is missing responses by participants. Additionally, the data only contains approximately one month of data. Trend insights could be affected in that there is not enough data over time to analyze or develop a clear picture of usage.
 
 ##### Current
 The data is not current and has not been updated since 2016. Additionally, the data provided by the case study scenario only contains data from 4/12/2016-5/12/2016.
@@ -104,7 +104,7 @@ I am using the [R programming language](https://www.r-project.org/) with [R Stud
 
 #### Check the data for errors and transform the data
 
-The data was evaluated using R Studio. The individual data files were loaded into data frames for further processing. Columns were evaluated for inconsistent or invalid values. Any removed rows of bad data were separated from the data frame but saved separately for transparency and possible future correction. Data that was considered too incomplete for analysis were documented.
+The data was evaluated using R Studio. The individual data files were loaded into data frames for further processing. Columns were evaluated for inconsistent or invalid values. Any removed rows of bad data were separated from the data frame. Data that was considered too incomplete for analysis were documented.
 
 #### Document the cleaning process.
 The cleaning and transformation processes were documented in an R Markdown file for repeatability and transparency. The log is available in the Deliverable table below.
@@ -119,17 +119,16 @@ The cleaning and transformation processes were documented in an R Markdown file 
 
 ### Analyze
 #### Aggregate your data so it's useful and accessible.
-The started_at datetime field was split into individual items while maintaining the original data in the started_at column. Two additional new columns were created from existing data to aid in discovering trends, a weekday column based on the started_at date, and a ride_length column to calculate the duration of each ride.
+While aggregating data can refer to the combining of separate structures into a structure of similar form, we also refer to aggregation as a means of summarzing the whole of data. The separate structures were already combined into new dataframes of similar structures in the process phase, but we will perform summary analysis on them to take a closer look at the available data. We will investigate the kind of data we have to work with in preparation for analyzing trends and relationships to accomplish the business task.
 
 #### Identify trends and relationships.
 Univariate and bivariate analyses were performed to identify trends in the data. ggplot2 was utilized to create a quick look at possible trends in preparation for the Share phase.
 
 | Deliverable                          |
 |--------------------------------------|
-| {::nomarkdown}<iframe src="{{ site.url }}/downloads/2023-04-02-gda-cs1/cs1-analyze.html" width="100%" height="400" frameborder="0" allowfullscreen></iframe>{:/} |
-| [View the R Markdown HTML output log]({{ site.url }}/downloads/2023-04-02-gda-cs1/cs1-analyze.html) |
-| [Download the R Markdown file]({{ site.url }}/downloads/2023-04-02-gda-cs1/cs1-analyze.Rmd) |
-| The analyzed data is 1.05 GB in size and contains 5,828,546 records. |
+| {::nomarkdown}<iframe src="{{ site.url }}/downloads/2023-04-10-gda-cs2/cs2-analyze.html" width="100%" height="400" frameborder="0" allowfullscreen></iframe>{:/} |
+| [View the R Markdown HTML output log]({{ site.url }}/downloads/2023-04-10-gda-cs2/cs2-analyze.html) |
+| [Download the R Markdown file]({{ site.url }}/downloads/2023-04-10-gda-cs2/cs2-analyze.Rmd) |
 
 ### Share
 
