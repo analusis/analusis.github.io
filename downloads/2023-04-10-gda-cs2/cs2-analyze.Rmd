@@ -1,0 +1,24 @@
+---
+title: "CGDA - Case Study 2 - Analyze Phase"
+output: html_document
+date: "2023-04-10"
+---
+
+```{r set outputs, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(results = 'hide')
+knitr::opts_chunk$set(error = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+```
+
+# Analyze Data
+
+## Load Packages
+First we'll load in packages for the processing phase.
+
+- tidyverse: a collection of data analysis packages
+```{r load packages}
+# knit options have suppressed any output for readability
+library(tidyverse)
+```
