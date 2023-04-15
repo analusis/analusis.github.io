@@ -1,6 +1,6 @@
 ---
 title: "CGDA - Case Study 2 - Process Phase"
-output: html_notebook
+output: html_document
 date: "2023-04-10"
 ---
 
@@ -39,75 +39,75 @@ knitr::opts_chunk$set(message = TRUE)
 ## Read CSV into Tibbles
 Next we'll use read_csv to load the individual data files into their own tibbles. We are explicitly setting the column types for date/datetime instead of relying on the guess function.
 ```{r load data into dataframes for ev}
-df_activity_daily <- read_csv('activity_daily.csv',
+df_activity_daily <- read_csv('data/activity_daily.csv',
                               col_types=cols(
                                 ActivityDate = col_date(format="%m/%d/%Y"),
                               ))
-df_calories_daily <- read_csv('calories_daily.csv',
+df_calories_daily <- read_csv('data/calories_daily.csv',
                               col_types=cols(
                                 ActivityDay = col_date(format="%m/%d/%Y"),
                               ))
-df_calories_hourly <- read_csv('calories_hourly.csv',
+df_calories_hourly <- read_csv('data/calories_hourly.csv',
                               col_types=cols(
                                 ActivityHour = col_datetime(format="%m/%d/%Y %I:%M:%S %p"),
                               ))
-df_calories_min_narrow <- read_csv('calories_minutes_narrow.csv',
+df_calories_min_narrow <- read_csv('data/calories_minutes_narrow.csv',
                               col_types=cols(
                                 ActivityMinute = col_datetime(format="%m/%d/%Y %I:%M:%S %p"),
                               ))
-df_calories_min_wide <- read_csv('calories_minutes_wide.csv',
+df_calories_min_wide <- read_csv('data/calories_minutes_wide.csv',
                               col_types=cols(
                                 ActivityHour = col_datetime(format="%m/%d/%Y %I:%M:%S %p"),
                               ))
-df_hr_by_sec <- read_csv('heartrate_by_seconds.csv',
+df_hr_by_sec <- read_csv('data/heartrate_by_seconds.csv',
                               col_types=cols(
                                 Time = col_datetime(format="%m/%d/%Y %I:%M:%S %p"),
                               ))
-df_intensity_daily <- read_csv('intensity_daily.csv',
+df_intensity_daily <- read_csv('data/intensity_daily.csv',
                               col_types=cols(
                                 ActivityDay = col_date(format="%m/%d/%Y"),
                               ))
-df_intensity_hourly <- read_csv('intensity_hourly.csv',
+df_intensity_hourly <- read_csv('data/intensity_hourly.csv',
                               col_types=cols(
                                 ActivityHour = col_datetime(format="%m/%d/%Y %I:%M:%S %p"),
                               ))
-df_intensity_min_narrow <- read_csv('intensity_minutes_narrow.csv',
+df_intensity_min_narrow <- read_csv('data/intensity_minutes_narrow.csv',
                               col_types=cols(
                                 ActivityMinute = col_datetime(format="%m/%d/%Y %I:%M:%S %p"),
                               ))
-df_intensity_min_wide <- read_csv('intensity_minutes_wide.csv',
+df_intensity_min_wide <- read_csv('data/intensity_minutes_wide.csv',
                               col_types=cols(
                                 ActivityHour = col_datetime(format="%m/%d/%Y %I:%M:%S %p"),
                               ))
-df_met_min_narrow <- read_csv('met_minutes_narrow.csv',
+df_met_min_narrow <- read_csv('data/met_minutes_narrow.csv',
                               col_types=cols(
                                 ActivityMinute = col_datetime(format="%m/%d/%Y %I:%M:%S %p"),
                               ))
-df_sleep_daily <- read_csv('sleep_daily.csv',
+df_sleep_daily <- read_csv('data/sleep_daily.csv',
                               col_types=cols(
                                 SleepDay = col_datetime(format="%m/%d/%Y %I:%M:%S %p"),
                               ))
-df_sleep_minutes <- read_csv('sleep_minutes.csv',
+df_sleep_minutes <- read_csv('data/sleep_minutes.csv',
                               col_types=cols(
                                 date = col_datetime(format="%m/%d/%Y %I:%M:%S %p"),
                               ))
-df_steps_daily <- read_csv('steps_daily.csv',
+df_steps_daily <- read_csv('data/steps_daily.csv',
                               col_types=cols(
                                 ActivityDay = col_date(format="%m/%d/%Y"),
                               ))
-df_steps_hourly <- read_csv('steps_hourly.csv',
+df_steps_hourly <- read_csv('data/steps_hourly.csv',
                               col_types=cols(
                                 ActivityHour = col_datetime(format="%m/%d/%Y %I:%M:%S %p"),
                               ))
-df_steps_min_narrow <- read_csv('steps_minutes_narrow.csv',
+df_steps_min_narrow <- read_csv('data/steps_minutes_narrow.csv',
                               col_types=cols(
                                 ActivityMinute = col_datetime(format="%m/%d/%Y %I:%M:%S %p"),
                               ))
-df_steps_min_wide <- read_csv('steps_minutes_wide.csv',
+df_steps_min_wide <- read_csv('data/steps_minutes_wide.csv',
                               col_types=cols(
                                 ActivityHour = col_datetime(format="%m/%d/%Y %I:%M:%S %p"),
                               ))
-df_weight <- read_csv('weight_log.csv',
+df_weight <- read_csv('data/weight_log.csv',
                               col_types=cols(
                                 Date = col_datetime(format="%m/%d/%Y %I:%M:%S %p"),
                               ))
@@ -304,19 +304,78 @@ We have inspected the data, removed duplicate records, and evaluated for missing
 Next we will join similar data and transform it by mutating or separating fields for future analysis.
 
 ### Daily Data
-#### Join Daily Data
-We will start by joining the daily data into one dataset.
+#### Mutate Daily Data
+The daily activity dataframe already contains all data from the daily calories/intensity/steps dataframes. The sleep dataframe could be added, but it is complete on its own and joining the data frames will create multiple records with NA values due to missing sleep data.
+
+We will rename the date column and add a weekday column as well. 
+```{r mutate daily data}
+df_daily <- df_activity_daily %>%
+  rename(date = activity_date) %>%
+  mutate(weekday=format(as.Date(.$date), "%A"), .after=date)
+
+df_daily_sleep <- df_sleep_daily %>%
+  rename(date = sleep_day) %>%
+  mutate(weekday=format(as.Date(.$date), "%A"), .after=date)
+```
+
+### Hourly Data
+#### Mutate Hourly Data
+We will rename the datetime column then mutate date and weekday columns in the first dataset. The rest of the datasets utilize the same datetime stamp and will be joined on their id/datetime pairs.
+
+```{r mutate hourly}
+df_hourly <- df_calories_hourly %>%
+  rename(date_time = activity_hour) %>%
+  mutate(date=format(as.Date(.$date_time)), .after=date_time) %>%
+  mutate(weekday=format(as.Date(.$date), "%A"), .after=date)
+```
+
+#### Join Hourly Data
+Now we will perform an outer join on the three hourly datasets so we have one dataset to work with.
+```{r join hourly data}
+df_hourly <- df_hourly %>%
+  full_join(df_intensity_hourly, by=c('id'='id','date_time'='activity_hour')) %>%
+  full_join(df_steps_hourly, by=c('id'='id','date_time'='activity_hour'))
+```
+
+### Minutes Data
+#### Mutate Minutes Data
+We will rename the datetime column in the calories and sleep datasets. The rest of the minutes datasets will be joined to the calories dataset using the same id/datetime pair.
+```{r mutate minutes}
+df_minutes <- df_calories_min_narrow %>%
+  rename(date_time = activity_minute)
+
+df_minutes_sleep <- df_sleep_minutes %>%
+  rename(date_time = date)
+```
+
+#### Join Minutes Data
+Now we will perform an outer join on the calories, intensity, MET, & steps datasets using the same id/datetime pairs.
+```{r join minutes}
+df_minutes <- df_minutes %>%
+  full_join(df_intensity_min_narrow, by=c('id'='id', 'date_time'='activity_minute')) %>%
+  full_join(df_met_min_narrow, by=c('id'='id', 'date_time'='activity_minute')) %>%
+  full_join(df_steps_min_narrow, by=c('id'='id', 'date_time'='activity_minute'))
+```
 
 ## Export Data
+We will export the data for the analysis phase.
+```{r export data}
+write.csv(df_daily, file='daily.csv', row.names=FALSE)
+write.csv(df_daily_sleep, file='sleep_daily.csv', row.names=FALSE)
+write.csv(df_hourly, file='hourly.csv', row.names=FALSE)
+write.csv(df_minutes, file='minutes.csv', row.names=FALSE)
+write.csv(df_minutes_sleep, file='sleep_minutes.csv', row.names=FALSE)
+```
+
 
 ## Next Steps
 Below are the next steps for aggregation during the Analyze phase:
 
-* Aggregate all daily data (we are missing sleep records for 9 participants)
-* Aggregate all hourly data
-* Aggregate all narrow minutes data (we are missing sleep records for 9 participants)
+* Analyze daily activity (we are missing sleep records for 9 participants)
+* Analyze hourly data
+* Analyze narrow minutes data (we are missing sleep records for 9 participants)
 
-The following data will be available for limited analysis due to incomplete data recording:
+The following data will be excluded from analysis due to incomplete data recording:
 
 * Weight
 * Heart rate by seconds
