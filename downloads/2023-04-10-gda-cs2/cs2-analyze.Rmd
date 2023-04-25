@@ -1,6 +1,6 @@
 ---
 title: "CGDA - Case Study 2 - Analyze Phase"
-output: html_document
+output: html_notebook
 date: "2023-04-10"
 ---
 
@@ -37,17 +37,20 @@ We'll load the CSV files into separate data frames for analysis. We'll also set 
 ```{r load CSV files into dataframes}
 df_daily <- read_csv("daily.csv", col_types=cols(id=col_character(), date = col_date(format="%Y-%m-%d"), cs_id=col_character()))
 df_daily$cs_id <- ordered(df_daily$cs_id, levels=c('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33'))
-df_hourly <- read_csv("hourly.csv", col_types=cols(id=col_character(), date_time = col_date(format="%Y-%m-%d %H:%M:%S"),date = col_date(format="%Y-%m-%d")))
-df_minutes <- read_csv("minutes.csv", col_types=cols(id=col_character(), date_time = col_date(format="%Y-%m-%d %H:%M:%S")))
+df_hourly <- read_csv("hourly.csv", col_types=cols(id=col_character(), date_time = col_datetime(format="%Y-%m-%d %H:%M:%S"),date = col_date(format="%Y-%m-%d")))
+df_hourly$cs_id <- ordered(df_hourly$cs_id, levels=c('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33'))
+df_minutes <- read_csv("minutes.csv", col_types=cols(id=col_character(), date_time = col_datetime(format="%Y-%m-%d %H:%M:%S")))
+df_minutes$cs_id <- ordered(df_minutes$cs_id, levels=c('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33'))
 df_sleep_daily <- read_csv("sleep_daily.csv",col_types=cols(id=col_character(), date = col_date(format="%Y-%m-%d")))
-df_sleep_minutes <- read_csv("sleep_minutes.csv", col_types=cols(id=col_character(), date_time = col_date(format="%Y-%m-%d %H:%M:%S")))
+df_sleep_daily$cs_id <- ordered(df_sleep_daily$cs_id, levels=c('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33'))
+df_sleep_minutes <- read_csv("sleep_minutes.csv", col_types=cols(id=col_character(), date_time = col_datetime(format="%Y-%m-%d %H:%M:%S")))
 ```
 
 ## Analyze Daily Data
 We'll start by  analyzing the daily data. First we'll take a look at the data structure, then we'll plot a few items based on the available data.
 
 ### Inspect and Summarize Daily Data
-```{r analyze daily d}
+```{r analyze daily data}
 str(df_daily)
 summary(df_daily)
 ```
@@ -59,34 +62,42 @@ While it is intriguing to analyze collected data for health or statistical corre
 df_daily %>%
   group_by(cs_id) %>%
   summarize(total_records = n()) %>%
-  ggplot(aes(x=cs_id, y=total_records, fill=cs_id)) + geom_col() + scale_fill_discrete()
+  ggplot(aes(x=cs_id, y=total_records, fill=cs_id)) + geom_col() + scale_fill_discrete() + labs(title="Total Daily Records per Participant") + xlab("Participant ID") + ylab("Total Records")
 
 # Total minutes of recording by id
 # there are 43,200 minutes in 30 days
 df_daily %>%
   group_by(cs_id) %>%
   summarize(total_minutes = sum(very_active_minutes, fairly_active_minutes, lightly_active_minutes, sedentary_minutes)) %>%
-  ggplot(aes(x=cs_id, y=total_minutes, fill=cs_id)) + geom_col() + scale_fill_discrete()
+  ggplot(aes(x=cs_id, y=total_minutes, fill=cs_id)) + geom_col() + scale_fill_discrete() + labs(title="Total Minutes of Recording per Participant") + xlab("Participant ID") + ylab("Total Minutes")
 
 # Total minutes recorded each day, line = id
 # there are 1,440 minutes in 1 day
 df_daily %>%
   rowwise() %>%
   mutate(daily_minutes = sum(very_active_minutes, fairly_active_minutes, lightly_active_minutes, sedentary_minutes)) %>%
-  ggplot(aes(x=date, y=daily_minutes, color=cs_id)) + geom_line() + facet_wrap(~cs_id) + scale_color_discrete() + theme(axis.text.x = element_text(angle=90))
+  ggplot(aes(x=date, y=daily_minutes, color=cs_id)) + geom_line() + facet_wrap(~cs_id) + scale_color_discrete() + theme(axis.text.x = element_text(angle=90)) + labs(title="Total Minutes Recorded Each Day by Participant") + xlab("Date") + ylab("Total Daily Minutes")
 
 # Total minutes recorded each day, by weekday
 df_daily %>%
   mutate(weekday = wday(date, label=TRUE)) %>%
   group_by(weekday) %>%
   summarise(total_minutes = sum(very_active_minutes, fairly_active_minutes, lightly_active_minutes, sedentary_minutes)) %>%
-  ggplot(aes(x=weekday, y=total_minutes, fill=weekday)) + geom_col() + scale_fill_discrete()
+  ggplot(aes(x=weekday, y=total_minutes, fill=weekday)) + geom_col() + scale_fill_discrete() + labs(title="Total Minutes Recorded each Weekday by All Participants") + xlab("Weekday") + ylab("Total Daily Minutes")
 
 # Total minutes recorded each weekday, by id
 df_daily %>%
   mutate(weekday = wday(date, label=TRUE)) %>%
   group_by(cs_id, weekday) %>%
   summarise(total_minutes = sum(very_active_minutes, fairly_active_minutes, lightly_active_minutes, sedentary_minutes)) %>%
+  ggplot(aes(x=weekday, y=total_minutes, fill=cs_id)) + geom_col() + facet_wrap(~cs_id) + scale_fill_discrete() + theme(axis.text.x = element_text(angle=90))
+
+# Average minutes recorded each weekday, by id
+df_daily %>%
+  mutate(weekday = wday(date, label=TRUE)) %>%
+  mutate(total_minutes = very_active_minutes+fairly_active_minutes+lightly_active_minutes+sedentary_minutes) %>%
+  group_by(cs_id, weekday) %>%
+  summarise(total_minutes = mean(total_minutes)) %>%
   ggplot(aes(x=weekday, y=total_minutes, fill=cs_id)) + geom_col() + facet_wrap(~cs_id) + scale_fill_discrete() + theme(axis.text.x = element_text(angle=90))
 
 # Total steps recorded each weekday, by id
@@ -96,4 +107,182 @@ df_daily %>%
   summarise(sum_steps = sum(total_steps)) %>%
   ggplot(aes(x=weekday, y=sum_steps, fill=cs_id)) + geom_col() +
   facet_wrap(~cs_id) + scale_fill_discrete() + theme(axis.text.x = element_text(angle=90))
+
+# Average steps recorded each weekday, by id
+df_daily %>%
+  mutate(weekday = wday(date, label=TRUE)) %>%
+  group_by(cs_id, weekday) %>%
+  summarise(avg_steps = mean(total_steps)) %>%
+  ggplot(aes(x=weekday, y=avg_steps, fill=cs_id)) + geom_col() + facet_wrap(~cs_id) + scale_fill_discrete()
+
+# Scatter plot of steps to sedentary minutes
+df_daily %>%
+  ggplot(aes(x=total_steps, y=sedentary_minutes)) + geom_point() + scale_color_discrete() + geom_smooth()
+
+# Scatter plot of steps to very active minutes
+df_daily %>%
+  ggplot(aes(x=total_steps, y=very_active_minutes)) + geom_point() + scale_color_discrete() + geom_smooth()
+
+# Pie plot of activity levels for all ids
+df_daily %>%
+  summarise('Very Active'=sum(very_active_minutes), 'Fairly Active'=sum(fairly_active_minutes),'Lightly Active'=sum(lightly_active_minutes),'Sedentary'=sum(sedentary_minutes)) %>%
+  pivot_longer(cols=names(.)) %>%
+  ggplot(aes(x="", y=value, fill=name)) + geom_bar(stat='identity', width=1) + coord_polar("y", start=0) + theme_void() + scale_fill_discrete()
+
+# average daily intensity, by id
+df_daily %>%
+  group_by(cs_id) %>%
+  summarise('Very Active' = mean(very_active_minutes), 'Fairly Active' = mean(fairly_active_minutes), 'Lightly Active' = mean(lightly_active_minutes), 'Sedentary' = mean(sedentary_minutes)) %>%
+  pivot_longer(cols='Very Active':'Sedentary') %>%
+  ggplot(aes(x=cs_id, y=value, fill=name)) + geom_bar(stat='identity') + labs(title="Average Daily Intensity", x="Participant", y="Average Daily Intensity") + theme(axis.text.x = element_text(angle=90))
+
+# average distance by weekday, by id
+df_daily %>%
+  mutate(weekday = wday(date, label=TRUE)) %>%
+  group_by(cs_id, weekday) %>%
+  summarise(avg_dist = mean(total_distance)) %>%
+  ggplot(aes(x=weekday, y=avg_dist, fill=cs_id)) + geom_col() + facet_wrap(~cs_id) + scale_fill_discrete() + theme(axis.text.x = element_text(angle=90))
+
+# total distance each day, by id
+df_daily %>%
+  ggplot(aes(x=date, y=total_distance, color=cs_id)) + geom_line() + facet_wrap(~cs_id) + scale_color_discrete() + theme(axis.text.x = element_text(angle=90)) + labs(title="Total Distance Recorded Each Day by Participant") + xlab("Date") + ylab("Total Daily Distance (km)")
+```
+
+```{r plot daily sleep data}
+# scatter plot total time in bed vs total minutes asleep
+df_sleep_daily %>%
+  ggplot(aes(x=total_time_in_bed, y=total_minutes_asleep)) + geom_point() + geom_smooth()
+
+# time in bed vs minutes asleep, by id
+df_sleep_daily %>%
+  ggplot(aes(x=total_time_in_bed, y=total_minutes_asleep, color=cs_id)) + geom_point() + facet_wrap(~cs_id) + scale_color_discrete()
+
+# average time in bed by weekday, by id
+df_sleep_daily %>%
+  mutate(weekday = wday(date, label=TRUE)) %>%
+  group_by(cs_id, weekday) %>%
+  summarise(avg_bed = mean(total_time_in_bed)) %>%
+  ggplot(aes(x=weekday, y=avg_bed, fill=cs_id)) + geom_col() + facet_wrap(~cs_id) + scale_fill_discrete()+ theme(axis.text.x = element_text(angle=90))
+
+# average time asleep by weekday, by id
+df_sleep_daily %>%
+  mutate(weekday = wday(date, label=TRUE)) %>%
+  group_by(cs_id, weekday) %>%
+  summarise(avg_sleep = mean(total_minutes_asleep)) %>%
+  ggplot(aes(x=weekday, y=avg_sleep, fill=cs_id)) + geom_col() + facet_wrap(~cs_id) + scale_fill_discrete()+ theme(axis.text.x = element_text(angle=90))
+```
+
+## Analyze Hourly Data
+
+### Inspect and Summarize Hourly Data
+```{r inspect hourly data}
+str(df_hourly)
+summary(df_hourly)
+```
+
+### Plot Hourly Data
+Intensity values are summarizations of by-the-minute activity level records. For example, as will be seen in the df_minutes data frame, the smart device labeled each minute as Very Active/Fairly Active/Lightly Active/Sedentary from 3 to 0 based on proprietary algorithms. The total_intensity field sums all of the individual minutes' activity level (0-3). The average intensity field divides the total_intensity field by 60 (minutes) to determine the average activity level throughout the hour.
+```{r plot hourly data}
+# Total records by id
+df_hourly %>%
+  group_by(cs_id) %>%
+  summarise(total_records = n()) %>%
+  ggplot(aes(x=cs_id, y=total_records, fill=cs_id)) + geom_col() + scale_fill_discrete() + labs(title='Total Hourly Records per Participant', x='Participant ID', y='Total Records')
+
+# average hourly total intensity across all ids
+df_hourly %>%
+  mutate(hour = hour(date_time)) %>%
+  group_by(hour) %>%
+  summarise(avg_intensity = mean(total_intensity)) %>%
+  ggplot(aes(x=hour, y=avg_intensity)) + geom_col() + scale_fill_discrete()
+
+# average hourly intensity across all ids
+df_hourly %>%
+  mutate(hour = hour(date_time)) %>%
+  group_by(hour) %>%
+  summarise(avg_intensity = mean(average_intensity)) %>%
+  ggplot(aes(x=hour, y=avg_intensity)) + geom_col() + scale_fill_discrete()
+
+# average hourly total intensity, by id
+df_hourly %>%
+  mutate(hour = hour(date_time)) %>%
+  group_by(cs_id, hour) %>%
+  summarise(avg_intensity = mean(total_intensity)) %>%
+  ggplot(aes(x=hour, y=avg_intensity, fill=cs_id)) + geom_col() + facet_wrap(~cs_id) + scale_fill_discrete()
+
+# total intensity value by the hour, by id
+df_hourly %>%
+  ggplot(aes(x=date_time, y=total_intensity, color=cs_id)) + geom_line() + facet_wrap(~cs_id) + scale_color_discrete() + theme(axis.text.x = element_text(angle=90)) + labs(title='Total Intensity by the Hour per Participant', x='Date/Time', y='Hourly Intensity')
+```
+
+## Analyze Minutes Data
+
+### Inspect and Summarize Minutes Data
+```{r inspect minutes data}
+str(df_minutes)
+summary(df_minutes)
+```
+
+### Plot Minutes Data
+```{r plot minutes data}
+# average recordings by the hour
+df_minutes %>%
+  mutate(hour = hour(date_time)) %>%
+  group_by(cs_id, hour) %>%
+  summarise(count_hour = n()) %>%
+  ggplot(aes(x=hour, y=count_hour, color=cs_id)) + geom_line() + facet_wrap(~cs_id) + scale_color_discrete()
+
+# total active (>0/not sedentary) intensity recorded by weekday, per id
+df_minutes %>%
+  filter(intensity > 0) %>%
+  mutate(weekday = wday(date_time, label=TRUE)) %>%
+  group_by(cs_id, weekday) %>%
+  summarise(sum_intensity = sum(intensity)) %>%
+  ggplot(aes(x=weekday, y=sum_intensity, fill=cs_id)) + geom_col() + facet_wrap(~cs_id) + scale_fill_discrete() + theme(axis.text.x = element_text(angle=90))
+
+# total calories burned by weekday, per id
+df_minutes %>%
+  mutate(weekday = wday(date_time, label=TRUE)) %>%
+  group_by(cs_id, weekday) %>%
+  summarise(sum_mets = sum(calories)) %>%
+  ggplot(aes(x=weekday, y=sum_mets, fill=cs_id)) + geom_col() + facet_wrap(~cs_id) + scale_fill_discrete() + theme(axis.text.x = element_text(angle=90))
+
+# average intensity by the hour per all ids
+df_minutes %>%
+  mutate(hour = hour(date_time)) %>%
+  group_by(hour) %>%
+  summarise(avg_intensity = mean(intensity)) %>%
+  ggplot(aes(x=hour, y=avg_intensity)) + geom_col()
+
+# average intensity by the hour, by id
+df_minutes %>%
+  mutate(hour = hour(date_time)) %>%
+  group_by(cs_id, hour) %>%
+  summarise(avg_intensity = mean(intensity)) %>%
+  ggplot(aes(x=hour, y=avg_intensity, fill=cs_id)) + geom_col() + facet_wrap(~cs_id) + scale_fill_discrete()
+
+# average intensity by the weekday and hour
+df_minutes %>%
+  mutate(hour = hour(date_time), weekday = wday(date_time, label=TRUE)) %>%
+  group_by(weekday, hour) %>%
+  summarise(avg_intensity = mean(intensity)) %>%
+  ggplot(aes(x=hour, y=avg_intensity)) + geom_col() + facet_wrap(~weekday)
+
+# average intensity by the weekday and hour, per id
+# we will look at just a few ids due to poor rendering if we do all at once
+df_minutes %>%
+  filter(cs_id == '1'|cs_id == '10'|cs_id == '20'|cs_id == '30') %>%
+  mutate(hour = hour(date_time), weekday = wday(date_time, label=TRUE)) %>%
+  group_by(cs_id, weekday, hour) %>%
+  summarise(avg_intensity = mean(intensity)) %>%
+  ggplot(aes(x=hour, y=avg_intensity, fill=cs_id)) + geom_col() + scale_fill_discrete() + facet_grid(cs_id ~ weekday)
+
+# average steps by the weekday and hour, per id
+# we will look at just a few ids due to poor rendering if we do all at once
+df_minutes %>%
+  filter(cs_id == '1'|cs_id == '10'|cs_id == '20'|cs_id == '30') %>%
+  mutate(hour = hour(date_time), weekday = wday(date_time, label=TRUE)) %>%
+  group_by(cs_id, weekday, hour) %>%
+  summarise(avg_steps = mean(steps)) %>%
+  ggplot(aes(x=hour, y=avg_steps, fill=cs_id)) + geom_col() + scale_fill_discrete() + facet_grid(cs_id ~ weekday)
 ```
