@@ -122,7 +122,7 @@ The cleaning and transformation processes were documented in an R Markdown file 
 While aggregating data can refer to the combining of separate structures into a structure of similar form, we also refer to aggregation as a means of summarzing the whole of data. The separate structures were already combined into new dataframes of similar structures in the process phase, but we will perform summary analysis on them to take a closer look at the available data. We will investigate the kind of data we have to work with in preparation for analyzing trends and relationships to accomplish the business task.
 
 #### Identify trends and relationships.
-Univariate and bivariate analyses were performed to identify trends in the data. ggplot2 was utilized to create a quick look at possible trends in preparation for the Share phase.
+Analysis of the available datasets were performed to identify trends in the data. ggplot2 was utilized to create a quick look at possible trends in preparation for the Share phase.
 
 | Deliverable                          |
 |--------------------------------------|
@@ -133,7 +133,7 @@ Univariate and bivariate analyses were performed to identify trends in the data.
 ### Share
 
 #### Determine the best way to share your findings.
-I am using Tableau to create charts based on historical data. The charts are separated into individual worksheets for viewing on Tableau.
+I am using Tableau to create charts based on the processed usage data. The charts are separated into individual worksheets for viewing on Tableau.
 <div class="gallery" data-columns="4">
 	<img src="/downloads/2023-04-02-gda-cs1/gallery/01.png">
 	<img src="/downloads/2023-04-02-gda-cs1/gallery/02.png">
@@ -145,19 +145,18 @@ I am using Tableau to create charts based on historical data. The charts are sep
 </div>
 
 #### Present your findings.
-PowerPoint was utilized to create a presentation. I sought to use contrasting colors with clear text and clean design. A shorter presentation style was created with the intention of summarized text and easy-to-read graphics to keep viewer engagement higher.
+Tableau dashboards were utilized to present findings. I grouped the charts according to related data to paint a picture of usage.
 
 | Deliverable                          |
 |--------------------------------------|
-| [View Charts in Tableau](https://public.tableau.com/app/profile/analusis/viz/CGDA-CaseStudy1/TrendCombinedbyMonthYear) |
-| [Download the PowerPoint Presentation]({{ site.url }}/downloads/2023-04-02-gda-cs1/CyclisticRiderTrends.pptx) |
+| [View Tableau Dashboard]() |
 
 ### Act
 #### Create your portfolio.
 I created this website using GitHub Pages and Jekyll to document my case study progress. 
 
 #### Practice presenting your case study.
-Using the colleague test, I worked to refine my presentation and delivery. This allowed me to identify areas of confusion that could be clarified or data gaps that further analysis or data collection could uncover.
+The colleague test was used to refine the dashboard for any areas that were identified as confusing or difficult to understand.
 
 | Deliverable                          |
 |--------------------------------------|
@@ -165,7 +164,7 @@ Using the colleague test, I worked to refine my presentation and delivery. This 
 
 
 ## Thank you!
-Thank you for taking the time to review my case study from the Coursera Google Data Analytics course. This course has given me valuable knowledge and skills that I will continue to improve with future studies, as this is only the beginning of my journey into data analytics, 
+Thank you for taking the time to review my second case study from the Coursera Google Data Analytics course. It was a goal of mine to work further with R in the analysis phase to isolate data and create new types of charts and presentations during the quick-look in preparation for the Share phase. I plan on continuing to take data analysis courses and create my own case studies as I learn.
 
 
 [^1]: This business task is fictional through the Coursera Google Data Analytics Certificate Course under the company name Bellabeat. The task uses [real-world data](https://www.kaggle.com/datasets/arashnic/fitbit) provided by [Möbius](https://www.kaggle.com/arashnic).
