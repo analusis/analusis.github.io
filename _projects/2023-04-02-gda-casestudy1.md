@@ -15,6 +15,14 @@ As a junior data analyst working in the marketing analyst team at Cyclistic[^1],
 
 ---
 
+| Case Study Presentations             |
+|--------------------------------------|
+| [View Charts in Tableau](https://public.tableau.com/app/profile/analusis/viz/CGDA-CaseStudy1/TrendCombinedbyMonthYear) |
+| [Download the PowerPoint Presentation]({{ site.url }}/downloads/2023-04-02-gda-cs1/CyclisticRiderTrends.pptx) |
+| [Download the Presentation PDF]({{ site.url }}/downloads/2023-04-02-gda-cs1/CyclisticRiderTrends.pdf) |
+
+---
+
 ## Data Analysis Phases
 
 ### Ask
@@ -122,6 +130,7 @@ PowerPoint was utilized to create a presentation. I sought to use contrasting co
 |--------------------------------------|
 | [View Charts in Tableau](https://public.tableau.com/app/profile/analusis/viz/CGDA-CaseStudy1/TrendCombinedbyMonthYear) |
 | [Download the PowerPoint Presentation]({{ site.url }}/downloads/2023-04-02-gda-cs1/CyclisticRiderTrends.pptx) |
+| [Download the Presentation PDF]({{ site.url }}/downloads/2023-04-02-gda-cs1/CyclisticRiderTrends.pdf) |
 
 ### Act
 #### Create your portfolio.
@@ -136,7 +145,7 @@ Using the colleague test, I worked to refine my presentation and delivery. This 
 
 
 ## Thank you!
-Thank you for taking the time to review my case study from the Coursera Google Data Analytics course. This course has given me valuable knowledge and skills that I will continue to improve with future studies, as this is only the beginning of my journey into data analytics, 
+Thank you for taking the time to review my case study from the Coursera Google Data Analytics course. This course has given me valuable knowledge and skills that I will continue to improve with future studies, as this is only the beginning of my journey into data analytics.
 
 
 [^1]: This business task is fictional through the Coursera Google Data Analytics Certificate Course under the fictional company name Cyclistic. The task uses real-world data provided by [Divvy](https://divvybikes.com/), which is a program of the [Chicago Department of Transportation](https://www.chicago.gov/city/en/depts/cdot.html) in Illinois, United States.
