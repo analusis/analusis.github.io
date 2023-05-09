@@ -15,6 +15,13 @@ As a junior data analyst working in the marketing analyst team at Bellabeat[^1],
 
 ---
 
+| Case Study Final Deliverables        |
+|--------------------------------------|
+| [View Tableau Story](https://public.tableau.com/views/CGDA-CaseStudy2/CGDA-CaseStudy2?:language=en-US&:display_count=n&:origin=viz_share_link) |
+| [Marketing Recommendations](#recommendations) |
+
+---
+
 ## Data Analysis Phases
 
 ### Ask
@@ -135,36 +142,59 @@ Analysis of the available datasets were performed to identify trends in the data
 #### Determine the best way to share your findings.
 I am using Tableau to create charts based on the processed usage data. The charts are separated into individual worksheets for viewing on Tableau.
 <div class="gallery" data-columns="4">
-	<img src="/downloads/2023-04-02-gda-cs1/gallery/01.png">
-	<img src="/downloads/2023-04-02-gda-cs1/gallery/02.png">
-    <img src="/downloads/2023-04-02-gda-cs1/gallery/03.png">
-    <img src="/downloads/2023-04-02-gda-cs1/gallery/04.png">
-    <img src="/downloads/2023-04-02-gda-cs1/gallery/05.png">
-    <img src="/downloads/2023-04-02-gda-cs1/gallery/06.png">
-    <img src="/downloads/2023-04-02-gda-cs1/gallery/07.png">
+	<img src="/downloads/2023-04-10-gda-cs2/gallery/01.png">
+	<img src="/downloads/2023-04-10-gda-cs2/gallery/02.png">
+    <img src="/downloads/2023-04-10-gda-cs2/gallery/03.png">
+    <img src="/downloads/2023-04-10-gda-cs2/gallery/04.png">
+    <img src="/downloads/2023-04-10-gda-cs2/gallery/05.png">
+    <img src="/downloads/2023-04-10-gda-cs2/gallery/06.png">
 </div>
 
 #### Present your findings.
-Tableau dashboards were utilized to present findings. I grouped the charts according to related data to paint a picture of usage.
+Tableau dashboards were utilized to organize findings and a story was created to present data findings.
 
 | Deliverable                          |
 |--------------------------------------|
-| [View Tableau Dashboard]() |
+| [View Tableau Story](https://public.tableau.com/views/CGDA-CaseStudy2/CGDA-CaseStudy2?:language=en-US&:display_count=n&:origin=viz_share_link) |
 
 ### Act
-#### Create your portfolio.
-I created this website using GitHub Pages and Jekyll to document my case study progress. 
+#### Findings
+##### Activity Data
+* Data was included for 33 participants
+* Of the 33 participants, 4 of them recorded only 4-20 days of data
+* While more than half (54%) of the participants recorded the majority of each day on average, the remaining 46% recorded at least half of each day on average.
 
-#### Practice presenting your case study.
-The colleague test was used to refine the dashboard for any areas that were identified as confusing or difficult to understand.
+| Average Percentage of the Day Recorded | Percent of Participants |
+| 90-100% | 54% |
+| 75-89% | 12% |
+| 50-74% | 34% |
 
-| Deliverable                          |
-|--------------------------------------|
-| [https://analusis.dev]({{ site.url }}) |
+* Increased activity levels were noted Monday-Friday at around 0500-0600. Saturdays were noted to have more overall activity throughout the day, with most activity taking place 8AM-10AM and 12PM-4PM. 
 
+##### Sleep Data
+* Only 24 participants recorded sleep data.
+* Most sleep activity was recorded between 11PM and 7AM
+* More sleep records exist for Sunday, Tuesday, and Wednesday than other weekdays
+* Daily sleep amounts peaked at 6-8 hours
+* The most common time for the sleep state was 3AM
+
+#### Recommendations {#recommendations}
+
+Our goal is to _"Identify trends in non-Bellabeat branded smart device usage to gain marketing strategy insight."_
+
+Keeping in mind the trends noted in the above analysis, Bellbeat could consider the following marketing strategies over competition:
+
+1. Emphasize the ability to wear Bellabeat devices regardless of daily activity with multiple colors and wear-type options, such as bracelet, clip, and necklace pendant.
+2. Educate potential users regarding ease of charging life cycles due to Bellabeat products having fast-charge capabilities and battery life lasting 8 days to 6 months depending on the product.
+3. Market the features provided by the Bellabeat app, such as reminders to be active, reach target step amounts, and plan for regular sleep cycles.
+4. Demonstrate the culmination of fashionable wear, long battery life, and app features all working together to create a healthy and active lifestyle.
 
 ## Thank you!
-Thank you for taking the time to review my second case study from the Coursera Google Data Analytics course. It was a goal of mine to work further with R in the analysis phase to isolate data and create new types of charts and presentations during the quick-look in preparation for the Share phase. I plan on continuing to take data analysis courses and create my own case studies as I learn.
+Thank you for taking the time to review my second case study from the Coursera Google Data Analytics course. It was a goal of mine to work further with R in the analysis phase to isolate data and create new types of charts and presentations during the quick-look in preparation for the Share phase.
+
+Unfortunately this case study involved a dataset with very limited data. Only one month of data was provided and no demographics such as age, lifestyle, intent, or usage type is available. With only one month of data, we are not able to assess for trends over a greater period of time. It is easy to use a device when it is new, but trends in lack or difficulty of usage become difficult to track. Much of the trends are left to assumptions or can become subject to biased interpretation.
+
+Despite the limitations of this case study, I am thankful for the opportunity to have learned the importance of accurate, thorough, and complete data collection.
 
 
 [^1]: This business task is fictional through the Coursera Google Data Analytics Certificate Course under the company name Bellabeat. The task uses [real-world data](https://www.kaggle.com/datasets/arashnic/fitbit) provided by [Möbius](https://www.kaggle.com/arashnic).
